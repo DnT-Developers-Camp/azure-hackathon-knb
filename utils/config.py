@@ -1,0 +1,26 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Azure OpenAI Configuration
+AZURE_OPENAI_API_KEY = os.getenv('AZURE_OPENAI_API_KEY')
+AZURE_OPENAI_ENDPOINT = os.getenv('AZURE_OPENAI_ENDPOINT')
+AZURE_OPENAI_DEPLOYMENT_NAME = os.getenv('AZURE_OPENAI_DEPLOYMENT_NAME')
+AZURE_OPENAI_API_VERSION = os.getenv('AZURE_OPENAI_API_VERSION')
+
+# Azure Storage Configuration
+AZURE_STORAGE_CONNECTION_STRING = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
+AZURE_STORAGE_CONTAINER_NAME = os.getenv('AZURE_STORAGE_CONTAINER_NAME')
+
+# Azure Cosmos DB Configuration
+COSMOS_ACCOUNT_URI = os.getenv('COSMOS_ACCOUNT_URI')
+COSMOS_MASTER_KEY = os.getenv('COSMOS_MASTER_KEY')
+COSMOS_DATABASE_ID = os.getenv('COSMOS_DATABASE_ID')
+COSMOS_CONTAINER_EMPLOYEE = os.getenv('COSMOS_CONTAINER_EMPLOYEE')
+
+# Azure Document Intelligence Configuration
+DI_ENDPOINT = os.getenv('DI_ENDPOINT')
+DI_KEY = os.getenv('DI_KEY')
+
+

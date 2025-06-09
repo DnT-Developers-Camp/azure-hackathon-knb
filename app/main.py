@@ -10,8 +10,7 @@ import uuid
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Now we can import from the utils package and pages
-from utils.azure_openai_utils import AzureOpenAIService
-from utils.resume_parser import parse_resume, load_sample_data
+from utils.resume_parser import  load_sample_data
 
 # Set page configuration and title
 st.set_page_config(page_title="Talent Management System", page_icon="👩‍💼", layout="wide")
@@ -79,10 +78,7 @@ def main():
     # App header
     st.title("👩‍💼 Talent Management System")
     st.markdown("### Employee Skill Gap Analysis & Career Development")
-    
-    # Initialize Azure OpenAI service
-    azure_openai_service = AzureOpenAIService()
-    
+
     # Load sample data for analysis
     job_roles_data, trainings_data, projects_data = load_sample_data()
     
