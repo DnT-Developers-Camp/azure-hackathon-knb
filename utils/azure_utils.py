@@ -21,7 +21,10 @@ AZURE_STORAGE_CONTAINER_NAME = os.getenv("AZURE_STORAGE_CONTAINER_NAME")
 COSMOS_ACCOUNT_URI = os.getenv("COSMOS_ACCOUNT_URI")
 COSMOS_MASTER_KEY = os.getenv("COSMOS_MASTER_KEY")
 COSMOS_DATABASE_ID = os.getenv("COSMOS_DATABASE_ID")
-COSMOS_CONTAINER_ID_FILE = os.getenv("COSMOS_CONTAINER_ID_FILE")
+COSMOS_CONTAINER_EMPLOYEE = os.getenv("COSMOS_CONTAINER_EMPLOYEE")
+
+DI_ENDPOINT = os.getenv("DI_ENDPOINT")
+DI_KEY = os.getenv("DI_KEY")
 
 
 def extract_markdown_doc_intel(endpoint,key,pdf_bytes):
@@ -113,7 +116,7 @@ def get_container_client(client, database_id, container_id):
 
 def get_container():
     client = get_cosmos_client(COSMOS_ACCOUNT_URI, COSMOS_MASTER_KEY)
-    return get_container_client(client, COSMOS_DATABASE_ID, COSMOS_CONTAINER_ID_FILE)
+    return get_container_client(client, COSMOS_DATABASE_ID, COSMOS_CONTAINER_EMPLOYEE)
 
 
 def read_items(container):

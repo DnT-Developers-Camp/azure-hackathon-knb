@@ -9,34 +9,28 @@ import uuid
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 # Import from the utils package
-from utils.azure_openai_utils import AzureOpenAIService
+from utils.azure_openai_utils import analyze_resume as analyze_resume_openai
 from utils.resume_parser import parse_resume, load_sample_data
+from utils.azure_utils import upload_file_to_blob
 
-def save_uploaded_file(uploaded_file):
-    """Save the uploaded file to the data/resumes directory and return the file path"""
-    # Create a unique filename
-    file_extension = os.path.splitext(uploaded_file.name)[1]
-    unique_filename = f"{uuid.uuid4()}{file_extension}"
-    
-    # Get the project root directory
-    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-    
-    # Ensure the directory exists
-    resumes_dir = os.path.join(root_dir, "data", "resumes")
-    os.makedirs(resumes_dir, exist_ok=True)
-    
-    # Save the file
-    file_path = os.path.join(resumes_dir, unique_filename)
-    with open(file_path, "wb") as f:
-        f.write(uploaded_file.getbuffer())
-    
-    return file_path
+# Initialize session state variables if they don't exist
+if 'analysis_results' not in st.session_state:
+    st.session_state.analysis_results = None
+if 'current_resume' not in st.session_state:
+    st.session_state.current_resume = None
+if 'resume_text' not in st.session_state:
+    st.session_state.resume_text = None
+def save_uploaded_file(uploaded_file): 
+# Upload to Azure Blob Storage
+    upload_file_to_blob(uploaded_file.getbuffer(), uploaded_file.name)
+
+    return uploaded_file.name
 
 def display_resume():
     """Display the current resume text in the app"""
-    if st.session_state.resume_text:
+    if 'resume_text' in st.session_state and st.session_state.resume_text:        
         with st.expander("Resume Content", expanded=True):
-            st.text_area("", value=st.session_state.resume_text, height=300, disabled=True)
+            st.text_area("Resume Content", value=st.session_state.resume_text, height=300, disabled=True, label_visibility="collapsed")
 
 
 
@@ -87,27 +81,21 @@ if process_clicked:
             st.error("Please upload a file or select a sample resume.")
 
 # Display the current resume
-if st.session_state.resume_text:
+if 'resume_text' in st.session_state and st.session_state.resume_text:
     display_resume()
     
     # Load sample data for analysis
     job_roles_data, trainings_data, projects_data = load_sample_data()
-    
-    # Initialize Azure OpenAI service
-    azure_openai_service = AzureOpenAIService()
-    
-    # Analysis button
+      # Analysis button
     if st.button("Analyze Resume"):
         with st.spinner("Analyzing resume with Azure OpenAI..."):
-            try:
-                analysis_result = azure_openai_service.analyze_resume(
-                    st.session_state.resume_text,
-                    job_roles_data,
-                    trainings_data,
-                    projects_data
-                )
-                
-                st.session_state.analysis_results = analysis_result
-                st.success("Analysis completed successfully! Go to the Analysis Results tab to view the results.")
-            except Exception as e:
-                st.error(f"Error during analysis: {str(e)}")
+            analysis_result = analyze_resume_openai(
+                st.session_state.resume_text,
+                job_roles_data,
+                trainings_data,
+                projects_data
+            )
+            
+            st.session_state.analysis_results = analysis_result
+            st.success("Analysis completed successfully! Go to the Analysis Results tab to view the results.")
+           
