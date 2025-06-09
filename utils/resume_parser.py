@@ -1,37 +1,6 @@
-import os
 import PyPDF2
-import docx
 import pandas as pd
-
-def parse_resume(file_path):
-    """
-    Parse a resume file (PDF or DOCX) and extract the text
-    """
-    file_extension = os.path.splitext(file_path)[1].lower()
-    
-    if file_extension == '.pdf':
-        return parse_pdf(file_path)
-    elif file_extension in ['.docx', '.doc']:
-        return parse_docx(file_path)
-    else:
-        return "Unsupported file format. Please upload PDF or DOCX files."
-
-def parse_pdf(file_path):
-    """Extract text from PDF file"""
-    with open(file_path, 'rb') as file:
-        pdf_reader = PyPDF2.PdfReader(file)
-        text = ""
-        for page in pdf_reader.pages:
-            text += page.extract_text()
-    return text
-
-def parse_docx(file_path):
-    """Extract text from DOCX file"""
-    doc = docx.Document(file_path)
-    full_text = []
-    for para in doc.paragraphs:
-        full_text.append(para.text)
-    return '\n'.join(full_text)
+import io
 
 def load_sample_data():
     """

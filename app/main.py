@@ -10,7 +10,7 @@ import uuid
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Now we can import from the utils package and pages
-from utils.resume_parser import parse_resume, load_sample_data
+from utils.resume_parser import  load_sample_data
 
 # Set page configuration and title
 st.set_page_config(page_title="Talent Management System", page_icon="👩‍💼", layout="wide")

@@ -10,26 +10,21 @@ from datetime import datetime, timedelta
 
 import logging
 
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-AZURE_STORAGE_CONNECTION_STRING = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-AZURE_STORAGE_CONTAINER_NAME = os.getenv("AZURE_STORAGE_CONTAINER_NAME")
-
-COSMOS_ACCOUNT_URI = os.getenv("COSMOS_ACCOUNT_URI")
-COSMOS_MASTER_KEY = os.getenv("COSMOS_MASTER_KEY")
-COSMOS_DATABASE_ID = os.getenv("COSMOS_DATABASE_ID")
-COSMOS_CONTAINER_EMPLOYEE = os.getenv("COSMOS_CONTAINER_EMPLOYEE")
-
-DI_ENDPOINT = os.getenv("DI_ENDPOINT")
-DI_KEY = os.getenv("DI_KEY")
+from utils.config import (
+   AZURE_STORAGE_CONNECTION_STRING,
+AZURE_STORAGE_CONTAINER_NAME,
+COSMOS_ACCOUNT_URI ,
+COSMOS_MASTER_KEY,
+COSMOS_DATABASE_ID,
+COSMOS_CONTAINER_EMPLOYEE,
+DI_ENDPOINT,
+DI_KEY
+)
 
 
-def extract_markdown_doc_intel(endpoint,key,pdf_bytes):
+def extract_markdown_doc_intel(pdf_bytes):
     try:
-        document_intelligence_client = DocumentIntelligenceClient(endpoint=endpoint, credential=AzureKeyCredential(key))
+        document_intelligence_client = DocumentIntelligenceClient(endpoint=DI_ENDPOINT, credential=AzureKeyCredential(DI_KEY))
         logging.info("CALLED: Document Intelligence")
         poller = document_intelligence_client.begin_analyze_document(
             model_id="prebuilt-layout",

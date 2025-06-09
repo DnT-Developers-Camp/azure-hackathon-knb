@@ -10,8 +10,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../.
 
 # Import from the utils package
 from utils.azure_openai_utils import analyze_resume as analyze_resume_openai
-from utils.resume_parser import parse_resume, load_sample_data
-from utils.azure_utils import upload_file_to_blob
+from utils.resume_parser import load_sample_data
+from utils.azure_utils import upload_file_to_blob, extract_markdown_doc_intel
 
 # Initialize session state variables if they don't exist
 if 'analysis_results' not in st.session_state:
@@ -22,7 +22,8 @@ if 'resume_text' not in st.session_state:
     st.session_state.resume_text = None
 def save_uploaded_file(uploaded_file): 
 # Upload to Azure Blob Storage
-    upload_file_to_blob(uploaded_file.getbuffer(), uploaded_file.name)
+    upload_file_to_blob(uploaded_file.read(), uploaded_file.name)
+    print(f"File {uploaded_file.name} uploaded successfully to Azure Blob Storage.")
 
     return uploaded_file.name
 
@@ -53,8 +54,13 @@ if process_clicked:
     with st.spinner("Processing resume..."):
         if uploaded_file is not None:
             # Save the uploaded file and parse it
-            temp_file_path = save_uploaded_file(uploaded_file)
-            resume_text = parse_resume(temp_file_path)
+            uploaded_file.seek(0)
+            save_uploaded_file(uploaded_file)
+            print(type(uploaded_file.read()))
+            uploaded_file.seek(0)
+            print(len(uploaded_file.read()))
+            uploaded_file.seek(0)
+            resume_text = extract_markdown_doc_intel(uploaded_file.read()).content
             st.session_state.current_resume = uploaded_file.name
             st.session_state.resume_text = resume_text
             # Show success message
