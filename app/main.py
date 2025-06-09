@@ -1,11 +1,17 @@
 import os
+import sys
 import streamlit as st
 import json
 import pandas as pd
-from utils.azure_openai_utils import AzureOpenAIService
-from utils.resume_parser import parse_resume, load_sample_data
 import tempfile
 import uuid
+
+# Add the project root directory to the Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# Now we can import from the utils package
+from utils.azure_openai_utils import AzureOpenAIService
+from utils.resume_parser import parse_resume, load_sample_data
 
 # Set page configuration and title
 st.set_page_config(page_title="Talent Management System", page_icon="👩‍💼", layout="wide")
@@ -24,11 +30,15 @@ def save_uploaded_file(uploaded_file):
     file_extension = os.path.splitext(uploaded_file.name)[1]
     unique_filename = f"{uuid.uuid4()}{file_extension}"
     
+    # Get the project root directory
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    
     # Ensure the directory exists
-    os.makedirs("data/resumes", exist_ok=True)
+    resumes_dir = os.path.join(root_dir, "data", "resumes")
+    os.makedirs(resumes_dir, exist_ok=True)
     
     # Save the file
-    file_path = os.path.join("data/resumes", unique_filename)
+    file_path = os.path.join(resumes_dir, unique_filename)
     with open(file_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
     
@@ -127,16 +137,17 @@ def main():
                     resume_text = parse_resume(temp_file_path)
                     st.session_state.current_resume = uploaded_file.name
                     st.session_state.resume_text = resume_text
-                    
-                    # Show success message
+                      # Show success message
                     st.success(f"Resume '{uploaded_file.name}' processed successfully!")
-                    
                 elif sample_option != "None":
+                    # Get the project root directory
+                    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+                    
                     # Load sample resume
                     if sample_option == "John Doe - Software Developer":
-                        sample_path = "data/sample_data/john_doe_resume.txt"
+                        sample_path = os.path.join(root_dir, "data", "sample_data", "john_doe_resume.txt")
                     else:  # Sarah Johnson
-                        sample_path = "data/sample_data/sarah_johnson_resume.txt"
+                        sample_path = os.path.join(root_dir, "data", "sample_data", "sarah_johnson_resume.txt")
                     
                     with open(sample_path, 'r') as file:
                         resume_text = file.read()
