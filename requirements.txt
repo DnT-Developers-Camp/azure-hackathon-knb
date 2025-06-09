@@ -7,3 +7,7 @@ azure-keyvault-secrets
 pandas
 PyPDF2
 python-docx
+azure-storage-blob
+azure-cosmos
+azure-ai-documentintelligence
+azure-core
