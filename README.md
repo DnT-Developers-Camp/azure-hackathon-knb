@@ -41,8 +41,16 @@ A Streamlit application for talent management with resume analysis using Azure O
 
 ### Running the Application
 
-Run the Streamlit application:
+You have two options to run the Streamlit application:
+
+#### Option 1: Using the launcher script (Recommended)
 ```bash
+python run_app.py
+```
+
+#### Option 2: Direct streamlit command
+```bash
+# From the project root directory
 streamlit run app/main.py
 ```
 
