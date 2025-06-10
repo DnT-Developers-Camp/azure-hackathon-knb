@@ -66,24 +66,26 @@ def analyze_resume(resume_text, job_roles_data, trainings_data, projects_data):
 
 def standardize_skill_output(md_text:str,type:str)->dict:
     """
-    type can be investment or digital technology
+    type can be Investment or Digital Technology
     Standardize the skill output from the Azure OpenAI response to a structured format.
     Extract into the format json
     {
     "skills":[
         {
             "skill_name": "Python",
-            "rating": "1"
+            "rating": "1",
+            "type":"technical"
         },
         {
             "skill_name": "Data Analysis",
-            "rating": "2"
+            "rating": "2",
+            "type":"technical"
         }
     ]
     }
     """
     # Use Azure OpenAI to extract skills and ratings from the resume text
-    if type=="investment":
+    if type=="Investment":
         skills_reference = skills_definition_iv
     else:
         skills_reference = skills_definition_dnt
@@ -95,7 +97,7 @@ def standardize_skill_output(md_text:str,type:str)->dict:
     For each skill found in the resume, output a JSON array in the format:
     {{
       "skills": [
-        {{"skill_name": "<Skill>", "rating": "<1-5>"}},
+        {{"skill_name": "<Skill>", "rating": "<1-5>", "type": "<technical/soft>"}},
         ...
       ]
     }}
@@ -123,4 +125,33 @@ def standardize_skill_output(md_text:str,type:str)->dict:
         return standardized
     except Exception:
         return {"skills": []}
+
+def extract_employee_name(resume_text: str) -> str:
+    """
+    Extract the employee's name from the resume text using Azure OpenAI.
+    Returns the name as a string, or an empty string if not found.
+    """
+    client = get_openai_client()
+    prompt = f"""
+    Given the following resume text, extract ONLY the full name of the employee. Return the result in JSON format as:
+    {{"name": "<Full Name>"}}
+    If the name cannot be determined, return {{"name": ""}}.
+    Resume:
+    {resume_text}
+    """
+    response = client.chat.completions.create(
+        model=AZURE_OPENAI_DEPLOYMENT_NAME,
+        messages=[
+            {"role": "system", "content": "You are an expert HR analyst. Extract only the employee's full name from the resume."},
+            {"role": "user", "content": prompt}
+        ]
+    )
+    try:
+        result = json.loads(response.choices[0].message.content)
+        return result.get("name", "")
+    except Exception:
+        return ""
+
+
+
 

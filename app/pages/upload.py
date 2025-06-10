@@ -9,9 +9,10 @@ import uuid
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 # Import from the utils package
-from utils.azure_openai_utils import analyze_resume as analyze_resume_openai,standardize_skill_output
+from utils.azure_openai_utils import analyze_resume as analyze_resume_openai,standardize_skill_output,extract_employee_name
 from utils.resume_parser import load_sample_data
-from utils.azure_utils import upload_file_to_blob, extract_markdown_doc_intel
+from utils.azure_utils import upload_file_to_blob, extract_markdown_doc_intel, get_container, add_item
+from datetime import datetime
 
 # Initialize session state variables if they don't exist
 if 'analysis_results' not in st.session_state:
@@ -20,6 +21,11 @@ if 'current_resume' not in st.session_state:
     st.session_state.current_resume = None
 if 'resume_text' not in st.session_state:
     st.session_state.resume_text = None
+if 'skills' not in st.session_state:
+    st.session_state.skills = None
+if 'employee_name' not in st.session_state:
+    st.session_state.employee_name = None
+
 def save_uploaded_file(uploaded_file): 
 # Upload to Azure Blob Storage
     upload_file_to_blob(uploaded_file.read(), uploaded_file.name)
@@ -40,13 +46,46 @@ st.header("Upload Employee Resume")
 # File uploader
 uploaded_file = st.file_uploader("Choose a resume file", type=["pdf"])
 
-# Sample resume selection
-st.markdown("### Or select a sample resume")
-sample_option = st.selectbox(
-    "Select a sample resume",
-    ["None", "John Doe - Software Developer", "Sarah Johnson - Data Analyst"]
+st.markdown("### Enter more details")
+division_option = st.selectbox(
+    "Select Division",
+    ["Investment", "Digital Technology"],
+    index=1  # Default to Digital Technology
 )
 
+st.markdown("#### Current Job Role and Description")
+job_role = st.text_input(
+    "Enter Job Role",
+    placeholder="e.g., Software Developer",
+    key="job_role"
+)
+
+job_description = st.text_area(
+    "Paste the job description here",
+    height=200,
+    key="job_description"
+)
+
+
+st.markdown("#### Future Job Role and Description")
+
+future_job_role = st.text_input(
+    "Enter Job Role",
+    placeholder="e.g., Software Developer",
+    key="future_job_role"
+)
+
+future_job_description = st.text_area(
+    "Paste the job description here",
+    height=200,
+    key="future_job_description"
+)
+
+# Date picker for "Date Joined"
+date_joined = st.date_input(
+    "Select Date Joined",
+    key="date_joined"
+)
 # Process the uploaded file or sample
 process_clicked = st.button("Process Resume")
 
@@ -56,42 +95,55 @@ if process_clicked:
             # Save the uploaded file and parse it
             uploaded_file.seek(0)
             save_uploaded_file(uploaded_file)
-           
-            uploaded_file.seek(0)
-            
             uploaded_file.seek(0)
             resume_text = extract_markdown_doc_intel(uploaded_file.read()).content
             st.session_state.current_resume = uploaded_file.name
             ## Need to process the resume text
-            skills = standardize_skill_output(resume_text, type="digital technology")
-            st.write(skills)
+            st.session_state.skills = standardize_skill_output(resume_text, type="Digital Technology")
+            st.session_state.employee_name  = extract_employee_name(resume_text)
             st.session_state.resume_text = resume_text
+
+            if division_option == "Investment":
+                # Set the manager for Investment division
+                manager = "Adrian Tan"
+            else:
+                manager = "Aisyah Rahman"
+
+            payload = {
+                "employee_name": st.session_state.employee_name,
+                "id": str(uuid.uuid4()),  # Generate a unique ID for the employee
+                "role": job_role,
+                "job_desc": job_description,
+                "manager": manager,
+                "division": division_option,
+                "date_joined": date_joined.strftime("%Y-%m-%d"),
+                "skills": st.session_state.skills,
+                "date_updated": datetime.today().strftime("%Y-%m-%d"),
+                "future_role": future_job_role,
+                "future_job_desc": future_job_description,
+                "pdf_name": uploaded_file.name
+            }
+
+            cosmos_container = get_container()
+            # Upload the resume data to Azure Cosmos DB
+
+            add_item(cosmos_container, payload)
+
             # Show success message
             st.success(f"Resume '{uploaded_file.name}' processed successfully!")
-        elif sample_option != "None":
+    
             # Get the project root directory
             root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-            
-            # Load sample resume
-            if sample_option == "John Doe - Software Developer":
-                sample_path = os.path.join(root_dir, "data", "sample_data", "john_doe_resume.txt")
-            else:  # Sarah Johnson
-                sample_path = os.path.join(root_dir, "data", "sample_data", "sarah_johnson_resume.txt")
-            
-            with open(sample_path, 'r') as file:
-                resume_text = file.read()
-            
-            st.session_state.current_resume = sample_option
+ 
             st.session_state.resume_text = resume_text
-            
-            # Show success message
-            st.success(f"Sample resume '{sample_option}' loaded successfully!")
+        
         else:
             st.error("Please upload a file or select a sample resume.")
 
 # Display the current resume
 if 'resume_text' in st.session_state and st.session_state.resume_text:
     display_resume()
+    st.write(st.session_state.skills)
     
     # Load sample data for analysis
     job_roles_data, trainings_data, projects_data = load_sample_data()
