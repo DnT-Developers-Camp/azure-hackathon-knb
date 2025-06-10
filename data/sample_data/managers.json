@@ -1,0 +1,39 @@
+[
+    {
+      "name": "Aisyah Rahman",
+      "id": "MGR001",
+      "role": "Head of Digital & Technology",
+      "division": "Digital & Technology",
+      "direct_reports": [
+        "DNT001",  
+        "DNT002",  
+        "DNT003",  
+        "DNT004",  
+        "DNT005",  
+        "DNT006",  
+        "DNT007",  
+        "DNT008",  
+        "DNT009",  
+        "DNT010"   
+      ]
+    },
+    {
+      "name": "Adrian Tan",
+      "id": "MGR002",
+      "role": "Head of Investments",
+      "division": "Investments",
+      "direct_reports": [
+        "INV001",  
+        "INV002",  
+        "INV003",  
+        "INV004",  
+        "INV005",  
+        "INV006",  
+        "INV007",  
+        "INV008",  
+        "INV009",  
+        "INV010"   
+      ]
+    }
+  ]
+  
