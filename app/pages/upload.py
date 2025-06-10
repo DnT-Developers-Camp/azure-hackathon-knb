@@ -23,7 +23,7 @@ if 'resume_text' not in st.session_state:
 def save_uploaded_file(uploaded_file): 
 # Upload to Azure Blob Storage
     upload_file_to_blob(uploaded_file.read(), uploaded_file.name)
-    print(f"File {uploaded_file.name} uploaded successfully to Azure Blob Storage.")
+    
 
     return uploaded_file.name
 
@@ -56,9 +56,9 @@ if process_clicked:
             # Save the uploaded file and parse it
             uploaded_file.seek(0)
             save_uploaded_file(uploaded_file)
-            print(type(uploaded_file.read()))
+           
             uploaded_file.seek(0)
-            print(len(uploaded_file.read()))
+            
             uploaded_file.seek(0)
             resume_text = extract_markdown_doc_intel(uploaded_file.read()).content
             st.session_state.current_resume = uploaded_file.name

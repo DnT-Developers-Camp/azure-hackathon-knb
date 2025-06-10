@@ -51,9 +51,6 @@ def analyze_resume(resume_text, job_roles_data, trainings_data, projects_data):
     client = get_openai_client()
     prompt = create_analysis_prompt(resume_text, job_roles_data, trainings_data, projects_data)
     
-    print(f"API key: {AZURE_OPENAI_API_KEY}")
-    print(f"Deployment name: {AZURE_OPENAI_DEPLOYMENT_NAME}")
-    print(f"Endpoint: {AZURE_OPENAI_ENDPOINT}")
     
     response = client.chat.completions.create(
         model=AZURE_OPENAI_DEPLOYMENT_NAME,
