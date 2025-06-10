@@ -31,6 +31,30 @@ def load_sample_data():
             "required_skills": ["Product Strategy", "Agile Methodology", "User Research", "Data Analysis", "Stakeholder Management"],
             "preferred_skills": ["Technical Background", "UX Design", "Market Research", "Product Analytics", "A/B Testing"],
             "level": "Senior"
+        },
+        {
+            "title": "Senior Digital & Technology Specialist",
+            "required_skills": ["Cloud Architecture", "Microservices", "CI/CD", "Full-Stack Development", "Data Engineering"],
+            "preferred_skills": ["AWS Solutions Architect", "Azure Solutions Architect", "Kubernetes", "Terraform", "Scrum Master"],
+            "level": "Senior"
+        },
+        {
+            "title": "Cybersecurity Engineer",
+            "required_skills": ["Network Security", "Security Operations", "Incident Response", "Security Tools", "Vulnerability Assessment"],
+            "preferred_skills": ["CISSP", "CEH", "Python", "Cloud Security", "Security Architecture"],
+            "level": "Senior"
+        },
+        {
+            "title": "Network Engineer",
+            "required_skills": ["Network Protocols", "Routing & Switching", "Network Security", "Troubleshooting", "Network Design"],
+            "preferred_skills": ["CCNP", "Network Automation", "SDN", "Cloud Networking", "Python"],
+            "level": "Mid-level"
+        },
+        {
+            "title": "Security Operations Analyst",
+            "required_skills": ["SIEM", "Threat Detection", "Security Monitoring", "Incident Response", "Log Analysis"],
+            "preferred_skills": ["Security+", "SIEM Tools", "Threat Intelligence", "Forensics", "Automation"],
+            "level": "Mid-level"
         }
     ]
     
@@ -83,6 +107,96 @@ def load_sample_data():
             "skills": ["CI/CD", "Docker", "Kubernetes", "Infrastructure as Code"],
             "duration": "6 weeks",
             "level": "Intermediate"
+        },
+        {
+            "name": "AWS Cloud Architecture",
+            "skills": ["AWS Lambda", "AWS Services", "Cloud Design Patterns", "AWS Security"],
+            "duration": "8 weeks",
+            "level": "Advanced"
+        },
+        {
+            "name": "Microservices Architecture",
+            "skills": ["API Design", "Service Mesh", "Event-Driven Architecture", "Containerization"],
+            "duration": "6 weeks",
+            "level": "Advanced"
+        },
+        {
+            "name": "Data Engineering Fundamentals",
+            "skills": ["Apache Spark", "Data Pipelines", "ETL", "Data Warehousing"],
+            "duration": "7 weeks",
+            "level": "Intermediate"
+        },
+        {
+            "name": "MLOps and AI Pipeline Development",
+            "skills": ["MLflow", "Model Deployment", "Pipeline Automation", "Model Monitoring"],
+            "duration": "5 weeks",
+            "level": "Advanced"
+        },
+        {
+            "name": "Advanced DevSecOps",
+            "skills": ["Security Testing", "Compliance Automation", "Threat Modeling", "Security as Code"],
+            "duration": "6 weeks",
+            "level": "Advanced"
+        },
+        {
+            "name": "Enterprise API Development",
+            "skills": ["RESTful Design", "GraphQL", "API Security", "API Gateway"],
+            "duration": "4 weeks",
+            "level": "Intermediate"
+        },
+        {
+            "name": "Cloud Native Development",
+            "skills": ["Kubernetes", "Service Mesh", "Cloud Native Patterns", "Microservices"],
+            "duration": "8 weeks",
+            "level": "Advanced"
+        },
+        {
+            "name": "Data Lake Implementation",
+            "skills": ["Azure Data Lake", "Data Modeling", "Big Data Processing", "Data Governance"],
+            "duration": "6 weeks",
+            "level": "Advanced"
+        },
+        {
+            "name": "Network Security Fundamentals",
+            "skills": ["Network Protocols", "Firewall Configuration", "VPN Setup", "Network Monitoring"],
+            "duration": "6 weeks",
+            "level": "Intermediate"
+        },
+        {
+            "name": "Advanced Security Operations",
+            "skills": ["SIEM Implementation", "Threat Hunting", "Incident Response", "Security Automation"],
+            "duration": "8 weeks",
+            "level": "Advanced"
+        },
+        {
+            "name": "Enterprise Network Design",
+            "skills": ["Network Architecture", "SDN", "Network Automation", "Performance Optimization"],
+            "duration": "7 weeks",
+            "level": "Advanced"
+        },
+        {
+            "name": "Cloud Security Architecture",
+            "skills": ["AWS Security", "Azure Security", "Zero Trust", "Security Controls"],
+            "duration": "6 weeks",
+            "level": "Advanced"
+        },
+        {
+            "name": "Penetration Testing Essentials",
+            "skills": ["Vulnerability Assessment", "Ethical Hacking", "Security Tools", "Report Writing"],
+            "duration": "8 weeks",
+            "level": "Advanced"
+        },
+        {
+            "name": "Security Automation with Python",
+            "skills": ["Python Scripting", "Security Tools API", "Automation Frameworks", "Security Testing"],
+            "duration": "5 weeks",
+            "level": "Intermediate"
+        },
+        {
+            "name": "Network Automation and Programmability",
+            "skills": ["Network APIs", "Python for Networks", "Ansible", "Network CI/CD"],
+            "duration": "6 weeks",
+            "level": "Intermediate"
         }
     ]
     
@@ -129,6 +243,48 @@ def load_sample_data():
             "duration": "6 months",
             "department": "Project Management Office",
             "goals": ["Transform traditional processes to Agile", "Train teams on Agile practices"]
+        },
+        {
+            "name": "Cloud-Native Platform Modernisation",
+            "required_skills": ["AWS Lambda", "Docker", "Terraform", "React", "Node.js"],
+            "duration": "9 months",
+            "department": "Platform Engineering",
+            "goals": ["Re-architect legacy system into microservices", "Implement serverless architecture"]
+        },
+        {
+            "name": "Enterprise Data Lake and Analytics Hub",
+            "required_skills": ["Azure Data Lake", "Spark", "Databricks", "Power BI"],
+            "duration": "12 months",
+            "department": "Data & Analytics",
+            "goals": ["Build centralized data lakehouse", "Implement real-time business intelligence"]
+        },
+        {
+            "name": "AI-Powered Predictive Maintenance System",
+            "required_skills": ["Python", "TensorFlow", "Docker", "Kubernetes"],
+            "duration": "8 months",
+            "department": "IoT Solutions",
+            "goals": ["Develop predictive analytics for equipment", "Implement industrial IoT monitoring"]
+        },
+        {
+            "name": "Secure DevOps Automation Framework",
+            "required_skills": ["GitHub Actions", "Terraform", "AWS CodePipeline", "OWASP ZAP"],
+            "duration": "6 months",
+            "department": "DevSecOps",
+            "goals": ["Implement security-first CI/CD", "Automate vulnerability scanning"]
+        },
+        {
+            "name": "Enterprise Network Security Transformation",
+            "required_skills": ["Network Security", "Zero Trust", "SIEM", "Firewall Management"],
+            "duration": "9 months",
+            "department": "Network Security",
+            "goals": ["Implement Zero Trust architecture", "Enhance network monitoring and threat detection"]
+        },
+        {
+            "name": "Security Operations Center Modernization",
+            "required_skills": ["SIEM", "Security Automation", "Incident Response", "Threat Intelligence"],
+            "duration": "8 months",
+            "department": "Security Operations",
+            "goals": ["Modernize SOC infrastructure", "Implement automated incident response"]
         }
     ]
     
@@ -432,4 +588,4 @@ skills_definition ={
       "5": "Expert: Provides strategic financial advice, leads accounting policy."  
     }  
   }  
-}  
+}
