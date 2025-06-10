@@ -9,7 +9,7 @@ import uuid
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 # Import from the utils package
-from utils.azure_openai_utils import analyze_resume as analyze_resume_openai
+from utils.azure_openai_utils import analyze_resume as analyze_resume_openai,standardize_skill_output
 from utils.resume_parser import load_sample_data
 from utils.azure_utils import upload_file_to_blob, extract_markdown_doc_intel
 
@@ -62,6 +62,9 @@ if process_clicked:
             uploaded_file.seek(0)
             resume_text = extract_markdown_doc_intel(uploaded_file.read()).content
             st.session_state.current_resume = uploaded_file.name
+            ## Need to process the resume text
+            skills = standardize_skill_output(resume_text, type="digital technology")
+            st.write(skills)
             st.session_state.resume_text = resume_text
             # Show success message
             st.success(f"Resume '{uploaded_file.name}' processed successfully!")

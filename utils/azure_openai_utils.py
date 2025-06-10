@@ -7,6 +7,8 @@ from utils.config import (
     AZURE_OPENAI_DEPLOYMENT_NAME
 )
 
+from utils.resume_parser import skills_definition_iv, skills_definition_dnt
+
 def get_openai_client():
     """Create and return an Azure OpenAI client"""
     return AzureOpenAI(
@@ -61,3 +63,64 @@ def analyze_resume(resume_text, job_roles_data, trainings_data, projects_data):
     )
     
     return response.choices[0].message.content
+
+def standardize_skill_output(md_text:str,type:str)->dict:
+    """
+    type can be investment or digital technology
+    Standardize the skill output from the Azure OpenAI response to a structured format.
+    Extract into the format json
+    {
+    "skills":[
+        {
+            "skill_name": "Python",
+            "rating": "1"
+        },
+        {
+            "skill_name": "Data Analysis",
+            "rating": "2"
+        }
+    ]
+    }
+    """
+    # Use Azure OpenAI to extract skills and ratings from the resume text
+    if type=="investment":
+        skills_reference = skills_definition_iv
+    else:
+        skills_reference = skills_definition_dnt
+    client = get_openai_client()
+    # Prepare a prompt to extract skills and their ratings from the resume
+    skills_list = list(skills_reference.get('skills_rating_definition', {}).keys())
+    prompt = f"""
+    Given the following resume text, extract the skills and their proficiency level (1-5) for each skill. Only consider these skills from the reference below: {json.dumps(skills_reference, indent=2)}.
+    For each skill found in the resume, output a JSON array in the format:
+    {{
+      "skills": [
+        {{"skill_name": "<Skill>", "rating": "<1-5>"}},
+        ...
+      ]
+    }}
+    If a skill is not mentioned, do not include it. If a rating is not clear, estimate based on context.
+    Resume:
+    {md_text}
+    """
+    response = client.chat.completions.create(
+        model=AZURE_OPENAI_DEPLOYMENT_NAME,
+        messages=[
+            {"role": "system", "content": "You are an expert HR analyst. Extract and rate only the listed skills from the resume."},
+            {"role": "user", "content": prompt}
+        ]
+    )
+    # Parse the response and filter only valid skills
+    try:
+        result = json.loads(response.choices[0].message.content)
+        valid_skills = set(skills_list)
+        standardized = {
+            "skills": [
+                s for s in result.get("skills", [])
+                if s.get("skill_name") in valid_skills and str(s.get("rating")).isdigit()
+            ]
+        }
+        return standardized
+    except Exception:
+        return {"skills": []}
+
