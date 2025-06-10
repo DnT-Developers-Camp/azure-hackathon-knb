@@ -1,0 +1,363 @@
+[
+    {
+      "name": "Nur Aina Zulkifli",
+      "id": "DNT001",
+      "role": "Software Engineer",
+      "job_desc": "Designs, develops, tests, and maintains software applications and systems. Collaborates with cross-functional teams to deliver scalable and robust solutions.",
+      "manager": "Aisyah Rahman",
+      "division": "Digital & Technology",
+      "date_joined": "2021-07-19",
+      "skills": [
+        {"skill_name": "Python", "rating": 4, "type": "technical"},
+        {"skill_name": "Java Script Framework (VUE)", "rating": 3, "type": "technical"},
+        {"skill_name": "Structured Thinking and Presentation", "rating": 3, "type": "soft"},
+        {"skill_name": "Stakeholder Management", "rating": 2, "type": "soft"}
+      ],
+      "date_updated": "2024-06-01",
+      "future_role": "Data Scientist",
+      "future_job_desc": "Analyzes complex data sets to extract insights, build predictive models, and support data-driven decision making. Uses statistical and ML techniques."
+    },
+    {
+      "name": "Syafiq Osman",
+      "id": "DNT002",
+      "role": "Data Scientist",
+      "job_desc": "Analyzes complex data sets to extract insights, build predictive models, and support data-driven decision making. Works with stakeholders to solve business problems using statistical and machine learning techniques.",
+      "manager": "Aisyah Rahman",
+      "division": "Digital & Technology",
+      "date_joined": "2019-03-04",
+      "skills": [
+        {"skill_name": "Python", "rating": 5, "type": "technical"},
+        {"skill_name": "SQL", "rating": 4, "type": "technical"},
+        {"skill_name": "Data Analytics Fundamentals", "rating": 4, "type": "technical"},
+        {"skill_name": "Stakeholder Management", "rating": 3, "type": "soft"}
+      ],
+      "date_updated": "2024-05-28",
+      "future_role": "Senior Digital & Technology Specialist",
+      "future_job_desc": "Architects and implements digital solutions, leads technology transformation initiatives, and ensures best practices in cloud and full-stack development."
+    },
+    {
+      "name": "Aiman Che Mat",
+      "id": "DNT003",
+      "role": "DevOps Engineer",
+      "job_desc": "Implements and manages CI/CD pipelines, automates infrastructure, and ensures reliable deployment of applications. Collaborates with development and operations teams to improve system reliability and scalability.",
+      "manager": "Aisyah Rahman",
+      "division": "Digital & Technology",
+      "date_joined": "2022-01-18",
+      "skills": [
+        {"skill_name": "Linux", "rating": 4, "type": "technical"},
+        {"skill_name": "CI/CD", "rating": 3, "type": "technical"},
+        {"skill_name": "Docker", "rating": 4, "type": "technical"},
+        {"skill_name": "Microsoft Azure Administrator", "rating": 2, "type": "technical"}
+      ],
+      "date_updated": "2024-06-07",
+      "future_role": "Senior Digital & Technology Specialist",
+      "future_job_desc": "Architects and implements digital solutions, leads technology transformation initiatives, and ensures best practices in cloud and full-stack development."
+    },
+    {
+      "name": "Chong Mei Ling",
+      "id": "DNT004",
+      "role": "Product Manager",
+      "job_desc": "Leads product strategy, defines requirements, and manages product lifecycle. Works with engineering, design, and business teams to deliver products that meet user needs and business goals.",
+      "manager": "Aisyah Rahman",
+      "division": "Digital & Technology",
+      "date_joined": "2018-11-02",
+      "skills": [
+        {"skill_name": "Product Strategy", "rating": 5, "type": "technical"},
+        {"skill_name": "Stakeholder Management", "rating": 4, "type": "soft"},
+        {"skill_name": "Structured Thinking and Presentation", "rating": 5, "type": "soft"},
+        {"skill_name": "Agile Project Management", "rating": 3, "type": "technical"}
+      ],
+      "date_updated": "2024-06-03",
+      "future_role": "Senior Digital & Technology Specialist",
+      "future_job_desc": "Architects and implements digital solutions, leads technology transformation initiatives, and ensures best practices in cloud and full-stack development."
+    },
+    {
+      "name": "Zainal Bakar",
+      "id": "DNT005",
+      "role": "Senior Digital & Technology Specialist",
+      "job_desc": "Architects and implements digital solutions, leads technology transformation initiatives, and ensures best practices in cloud and full-stack development.",
+      "manager": "Aisyah Rahman",
+      "division": "Digital & Technology",
+      "date_joined": "2017-08-15",
+      "skills": [
+        {"skill_name": "Cloud Architecture", "rating": 5, "type": "technical"},
+        {"skill_name": "Microservices", "rating": 4, "type": "technical"},
+        {"skill_name": "Full-Stack Development", "rating": 4, "type": "technical"},
+        {"skill_name": "Stakeholder Management", "rating": 5, "type": "soft"}
+      ],
+      "date_updated": "2024-06-04",
+      "future_role": "CTO",
+      "future_job_desc": "Drives overall technology strategy, manages the technology division, and leads company-wide digital transformation."
+    },
+    {
+      "name": "Sharifah Noraini",
+      "id": "DNT006",
+      "role": "Cybersecurity Engineer",
+      "job_desc": "Protects systems and networks from cyber threats, manages security operations, and responds to incidents. Conducts vulnerability assessments and implements security best practices.",
+      "manager": "Aisyah Rahman",
+      "division": "Digital & Technology",
+      "date_joined": "2020-06-21",
+      "skills": [
+        {"skill_name": "Network Security", "rating": 4, "type": "technical"},
+        {"skill_name": "Security Operations", "rating": 4, "type": "technical"},
+        {"skill_name": "Incident Response", "rating": 3, "type": "technical"},
+        {"skill_name": "Microsoft Azure Security", "rating": 3, "type": "technical"}
+      ],
+      "date_updated": "2024-06-06",
+      "future_role": "Senior Digital & Technology Specialist",
+      "future_job_desc": "Architects and implements digital solutions, leads technology transformation initiatives, and ensures best practices in cloud and full-stack development."
+    },
+    {
+      "name": "Low Zhi Hao",
+      "id": "DNT007",
+      "role": "Network Engineer",
+      "job_desc": "Designs, configures, and maintains network infrastructure. Troubleshoots network issues and ensures secure and efficient network operations.",
+      "manager": "Aisyah Rahman",
+      "division": "Digital & Technology",
+      "date_joined": "2019-09-12",
+      "skills": [
+        {"skill_name": "Network Protocols", "rating": 4, "type": "technical"},
+        {"skill_name": "Network Security", "rating": 3, "type": "technical"},
+        {"skill_name": "Troubleshooting", "rating": 4, "type": "technical"},
+        {"skill_name": "Information Technology Fundamentals", "rating": 4, "type": "technical"}
+      ],
+      "date_updated": "2024-06-04",
+      "future_role": "DevOps Engineer",
+      "future_job_desc": "Implements and manages CI/CD pipelines, automates infrastructure, and ensures reliable deployment of applications."
+    },
+    {
+      "name": "Farah Huda",
+      "id": "DNT008",
+      "role": "Security Operations Analyst",
+      "job_desc": "Monitors security events, detects threats, and responds to incidents. Analyzes logs and supports the security operations center (SOC) in maintaining organizational security.",
+      "manager": "Aisyah Rahman",
+      "division": "Digital & Technology",
+      "date_joined": "2021-02-11",
+      "skills": [
+        {"skill_name": "SIEM", "rating": 3, "type": "technical"},
+        {"skill_name": "Threat Detection", "rating": 4, "type": "technical"},
+        {"skill_name": "Incident Response", "rating": 3, "type": "technical"},
+        {"skill_name": "Log Analysis", "rating": 3, "type": "technical"}
+      ],
+      "date_updated": "2024-06-05",
+      "future_role": "Cybersecurity Engineer",
+      "future_job_desc": "Protects systems and networks from cyber threats, manages security operations, and responds to incidents."
+    },
+    {
+      "name": "Kamal Yusof",
+      "id": "DNT009",
+      "role": "Software Engineer",
+      "job_desc": "Designs, develops, tests, and maintains software applications and systems. Collaborates with cross-functional teams to deliver scalable and robust solutions.",
+      "manager": "Aisyah Rahman",
+      "division": "Digital & Technology",
+      "date_joined": "2023-04-14",
+      "skills": [
+        {"skill_name": "Python", "rating": 3, "type": "technical"},
+        {"skill_name": "React JS", "rating": 3, "type": "technical"},
+        {"skill_name": "Stakeholder Management", "rating": 2, "type": "soft"}
+      ],
+      "date_updated": "2024-06-01",
+      "future_role": "Product Manager",
+      "future_job_desc": "Leads product strategy, defines requirements, and manages product lifecycle. Works with teams to deliver products that meet user and business needs."
+    },
+    {
+      "name": "Natasha Lim",
+      "id": "DNT010",
+      "role": "Data Scientist",
+      "job_desc": "Analyzes complex data sets to extract insights, build predictive models, and support data-driven decision making. Works with stakeholders to solve business problems using statistical and machine learning techniques.",
+      "manager": "Aisyah Rahman",
+      "division": "Digital & Technology",
+      "date_joined": "2020-05-10",
+      "skills": [
+        {"skill_name": "Python", "rating": 4, "type": "technical"},
+        {"skill_name": "SQL", "rating": 4, "type": "technical"},
+        {"skill_name": "Statistics", "rating": 3, "type": "technical"},
+        {"skill_name": "Machine Learning", "rating": 3, "type": "technical"}
+      ],
+      "date_updated": "2024-06-06",
+      "future_role": "Senior Digital & Technology Specialist",
+      "future_job_desc": "Architects and implements digital solutions, leads technology transformation initiatives, and ensures best practices in cloud and full-stack development."
+    },
+  
+    {
+      "name": "Jonathan Leong",
+      "id": "INV001",
+      "role": "Senior Investment Analyst",
+      "job_desc": "Conducts in-depth investment research and analysis across asset classes, builds financial models, and presents recommendations to investment committees. Leads reporting and mentoring within the investment team.",
+      "manager": "Adrian Tan",
+      "division": "Investments",
+      "date_joined": "2017-12-19",
+      "skills": [
+        {"skill_name": "Equity Research and Valuation", "rating": 5, "type": "technical"},
+        {"skill_name": "Financial Modelling (DCF, LBO, M&A)", "rating": 4, "type": "technical"},
+        {"skill_name": "Team Mentoring and Leadership", "rating": 5, "type": "soft"},
+        {"skill_name": "ESG Integration", "rating": 3, "type": "technical"}
+      ],
+      "date_updated": "2024-06-05",
+      "future_role": "Investment Operations Manager",
+      "future_job_desc": "Oversees investment operations including trade settlement, fund accounting, and regulatory reporting. Manages operational risk, process automation, and team leadership in investment operations."
+    },
+    {
+      "name": "Michelle Ong",
+      "id": "INV002",
+      "role": "Private Equity Analyst",
+      "job_desc": "Supports private equity deal sourcing, due diligence, and portfolio monitoring. Builds financial models, prepares investment memos, and assists in exit strategy analysis.",
+      "manager": "Adrian Tan",
+      "division": "Investments",
+      "date_joined": "2021-08-01",
+      "skills": [
+        {"skill_name": "Deal Sourcing and Screening", "rating": 4, "type": "technical"},
+        {"skill_name": "Due Diligence", "rating": 3, "type": "technical"},
+        {"skill_name": "Financial Modelling (LBO, DCF)", "rating": 3, "type": "technical"},
+        {"skill_name": "Valuation Analysis", "rating": 3, "type": "technical"}
+      ],
+      "date_updated": "2024-06-07",
+      "future_role": "Senior Investment Analyst",
+      "future_job_desc": "Conducts in-depth investment research and analysis, builds financial models, and leads reporting within the investment team."
+    },
+    {
+      "name": "Faisal Ramli",
+      "id": "INV003",
+      "role": "Investment Operations Manager",
+      "job_desc": "Oversees investment operations including trade settlement, fund accounting, and regulatory reporting. Manages operational risk, process automation, and team leadership in investment operations.",
+      "manager": "Adrian Tan",
+      "division": "Investments",
+      "date_joined": "2015-03-20",
+      "skills": [
+        {"skill_name": "Fund Accounting", "rating": 5, "type": "technical"},
+        {"skill_name": "Trade Settlement and Reconciliation", "rating": 5, "type": "technical"},
+        {"skill_name": "Process Automation", "rating": 4, "type": "technical"},
+        {"skill_name": "Team Leadership", "rating": 5, "type": "soft"}
+      ],
+      "date_updated": "2024-06-02",
+      "future_role": "Head of Investment Operations",
+      "future_job_desc": "Leads the entire investment operations division, develops operational strategy, manages teams, and ensures regulatory compliance."
+    },
+    {
+      "name": "Alyssa Tan",
+      "id": "INV004",
+      "role": "Private Equity Analyst",
+      "job_desc": "Supports private equity deal sourcing, due diligence, and portfolio monitoring. Builds financial models, prepares investment memos, and assists in exit strategy analysis.",
+      "manager": "Adrian Tan",
+      "division": "Investments",
+      "date_joined": "2022-05-16",
+      "skills": [
+        {"skill_name": "Deal Sourcing and Screening", "rating": 3, "type": "technical"},
+        {"skill_name": "Financial Modelling (LBO, DCF)", "rating": 3, "type": "technical"},
+        {"skill_name": "Industry and Market Research", "rating": 4, "type": "technical"},
+        {"skill_name": "Stakeholder Communication", "rating": 3, "type": "soft"}
+      ],
+      "date_updated": "2024-06-07",
+      "future_role": "Senior Investment Analyst",
+      "future_job_desc": "Conducts in-depth investment research and analysis, builds financial models, and leads reporting within the investment team."
+    },
+    {
+      "name": "Yusof Azmi",
+      "id": "INV005",
+      "role": "Investment Operations Manager",
+      "job_desc": "Oversees investment operations including trade settlement, fund accounting, and regulatory reporting. Manages operational risk, process automation, and team leadership in investment operations.",
+      "manager": "Adrian Tan",
+      "division": "Investments",
+      "date_joined": "2018-07-30",
+      "skills": [
+        {"skill_name": "Regulatory Reporting", "rating": 5, "type": "technical"},
+        {"skill_name": "Risk and Compliance Oversight", "rating": 4, "type": "technical"},
+        {"skill_name": "Performance Measurement", "rating": 4, "type": "technical"},
+        {"skill_name": "Team Leadership", "rating": 5, "type": "soft"}
+      ],
+      "date_updated": "2024-06-06",
+      "future_role": "Senior Investment Analyst",
+      "future_job_desc": "Conducts in-depth investment research and analysis, builds financial models, and leads reporting within the investment team."
+    },
+    {
+      "name": "Melissa Chang",
+      "id": "INV006",
+      "role": "Senior Investment Analyst",
+      "job_desc": "Conducts in-depth investment research and analysis across asset classes, builds financial models, and presents recommendations to investment committees. Leads reporting and mentoring within the investment team.",
+      "manager": "Adrian Tan",
+      "division": "Investments",
+      "date_joined": "2019-09-23",
+      "skills": [
+        {"skill_name": "Macroeconomic and Market Analysis", "rating": 5, "type": "technical"},
+        {"skill_name": "Portfolio Construction and Risk Management", "rating": 4, "type": "technical"},
+        {"skill_name": "Investment Committee Presentation Skills", "rating": 4, "type": "soft"},
+        {"skill_name": "Team Mentoring and Leadership", "rating": 5, "type": "soft"}
+      ],
+      "date_updated": "2024-06-07",
+      "future_role": "Investment Operations Manager",
+      "future_job_desc": "Oversees investment operations including trade settlement, fund accounting, and regulatory reporting. Manages operational risk, process automation, and team leadership in investment operations."
+    },
+    {
+      "name": "Nabil Haris",
+      "id": "INV007",
+      "role": "Private Equity Analyst",
+      "job_desc": "Supports private equity deal sourcing, due diligence, and portfolio monitoring. Builds financial models, prepares investment memos, and assists in exit strategy analysis.",
+      "manager": "Adrian Tan",
+      "division": "Investments",
+      "date_joined": "2020-11-12",
+      "skills": [
+        {"skill_name": "Deal Sourcing and Screening", "rating": 2, "type": "technical"},
+        {"skill_name": "Financial Modelling (LBO, DCF)", "rating": 2, "type": "technical"},
+        {"skill_name": "Valuation Analysis", "rating": 3, "type": "technical"},
+        {"skill_name": "Stakeholder Communication", "rating": 2, "type": "soft"}
+      ],
+      "date_updated": "2024-06-06",
+      "future_role": "Senior Investment Analyst",
+      "future_job_desc": "Conducts in-depth investment research and analysis, builds financial models, and leads reporting within the investment team."
+    },
+    {
+      "name": "Shalini Perera",
+      "id": "INV008",
+      "role": "Investment Operations Manager",
+      "job_desc": "Oversees investment operations including trade settlement, fund accounting, and regulatory reporting. Manages operational risk, process automation, and team leadership in investment operations.",
+      "manager": "Adrian Tan",
+      "division": "Investments",
+      "date_joined": "2016-06-09",
+      "skills": [
+        {"skill_name": "Custodian and Counterparty Management", "rating": 5, "type": "technical"},
+        {"skill_name": "Cash Management", "rating": 5, "type": "technical"},
+        {"skill_name": "System Implementation", "rating": 4, "type": "technical"},
+        {"skill_name": "Team Leadership", "rating": 5, "type": "soft"}
+      ],
+      "date_updated": "2024-06-05",
+      "future_role": "Head of Investment Operations",
+      "future_job_desc": "Leads the entire investment operations division, develops operational strategy, manages teams, and ensures regulatory compliance."
+    },
+    {
+      "name": "Rizal Saad",
+      "id": "INV009",
+      "role": "Senior Investment Analyst",
+      "job_desc": "Conducts in-depth investment research and analysis across asset classes, builds financial models, and presents recommendations to investment committees. Leads reporting and mentoring within the investment team.",
+      "manager": "Adrian Tan",
+      "division": "Investments",
+      "date_joined": "2018-01-29",
+      "skills": [
+        {"skill_name": "ESG Integration", "rating": 4, "type": "technical"},
+        {"skill_name": "Financial Modelling (DCF, LBO, M&A)", "rating": 3, "type": "technical"},
+        {"skill_name": "Portfolio Construction and Risk Management", "rating": 3, "type": "technical"},
+        {"skill_name": "Client and Stakeholder Reporting", "rating": 4, "type": "soft"}
+      ],
+      "date_updated": "2024-06-06",
+      "future_role": "Investment Operations Manager",
+      "future_job_desc": "Oversees investment operations including trade settlement, fund accounting, and regulatory reporting. Manages operational risk, process automation, and team leadership in investment operations."
+    },
+    {
+      "name": "Siti Hasnah",
+      "id": "INV010",
+      "role": "Private Equity Analyst",
+      "job_desc": "Supports private equity deal sourcing, due diligence, and portfolio monitoring. Builds financial models, prepares investment memos, and assists in exit strategy analysis.",
+      "manager": "Adrian Tan",
+      "division": "Investments",
+      "date_joined": "2023-02-21",
+      "skills": [
+        {"skill_name": "Industry and Market Research", "rating": 3, "type": "technical"},
+        {"skill_name": "Financial Modelling (LBO, DCF)", "rating": 2, "type": "technical"},
+        {"skill_name": "Investment Memo Preparation", "rating": 2, "type": "technical"},
+        {"skill_name": "Exit Strategy Analysis", "rating": 2, "type": "technical"}
+      ],
+      "date_updated": "2024-06-07",
+      "future_role": "Senior Investment Analyst",
+      "future_job_desc": "Conducts in-depth investment research and analysis, builds financial models, and leads reporting within the investment team."
+    }
+  ]
+  
