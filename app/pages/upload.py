@@ -4,6 +4,7 @@ import streamlit as st
 import json
 import tempfile
 import uuid
+import pandas as pd
 
 # Add the project root directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
@@ -39,9 +40,7 @@ def display_resume():
         with st.expander("Resume Content", expanded=True):
             st.text_area("Resume Content", value=st.session_state.resume_text, height=300, disabled=True, label_visibility="collapsed")
 
-
-
-st.header("Upload Employee Resume")
+st.title('Upload New Employee Resume')
 
 # File uploader
 uploaded_file = st.file_uploader("Choose a resume file", type=["pdf"])
@@ -53,30 +52,36 @@ division_option = st.selectbox(
     index=1  # Default to Digital Technology
 )
 
+# Load job roles from resume_parser
+job_roles, _, _ = load_sample_data()
+role_titles = [role["title"] for role in job_roles]
+role_desc_map = {role["title"]: role["job_description"] for role in job_roles}
+
 st.markdown("#### Current Job Role and Description")
-job_role = st.text_input(
-    "Enter Job Role",
-    placeholder="e.g., Software Developer",
-    key="job_role"
+job_role = st.selectbox(
+    "Select Current Job Role",
+    role_titles,
+    key="job_role_select"
 )
 
 job_description = st.text_area(
-    "Paste the job description here",
+    "Edit the job description here",
+    value=role_desc_map.get(job_role, ""),
     height=200,
     key="job_description"
 )
 
 
 st.markdown("#### Future Job Role and Description")
-
-future_job_role = st.text_input(
-    "Enter Job Role",
-    placeholder="e.g., Software Developer",
-    key="future_job_role"
+future_job_role = st.selectbox(
+    "Select Future Job Role",
+    role_titles,
+    key="future_job_role_select"
 )
 
 future_job_description = st.text_area(
-    "Paste the job description here",
+    "Edit the future job description here",
+    value=role_desc_map.get(future_job_role, ""),
     height=200,
     key="future_job_description"
 )
@@ -143,20 +148,6 @@ if process_clicked:
 # Display the current resume
 if 'resume_text' in st.session_state and st.session_state.resume_text:
     display_resume()
-    st.write(st.session_state.skills)
-    
-    # Load sample data for analysis
-    job_roles_data, trainings_data, projects_data = load_sample_data()
-      # Analysis button
-    if st.button("Analyze Resume"):
-        with st.spinner("Analyzing resume with Azure OpenAI..."):
-            analysis_result = analyze_resume_openai(
-                st.session_state.resume_text,
-                job_roles_data,
-                trainings_data,
-                projects_data
-            )
-            
-            st.session_state.analysis_results = analysis_result
-            st.success("Analysis completed successfully! Go to the Analysis Results tab to view the results.")
-           
+    df = pd.DataFrame(st.session_state.skills["skills"])
+    st.write(df)
+
