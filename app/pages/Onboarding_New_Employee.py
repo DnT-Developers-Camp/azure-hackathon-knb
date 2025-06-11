@@ -126,7 +126,7 @@ if process_clicked:
                 "manager": manager,
                 "division": division_option,
                 "date_joined": date_joined.strftime("%Y-%m-%d"),
-                "skills": st.session_state.skills,
+                "skills": st.session_state.skills["skills"],
                 "date_updated": datetime.today().strftime("%Y-%m-%d"),
                 "future_role": future_job_role,
                 "future_job_desc": future_job_description,
