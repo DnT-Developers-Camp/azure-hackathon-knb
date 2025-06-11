@@ -31,79 +31,9 @@ soft_skills = {
 }
 
 
-st.title(f"Welcome, {employee_name}!")
+st.markdown(f"<h1 class='main-header'>Welcome, {employee_name}! 👋</h1>", unsafe_allow_html=True)
 
 tab1, tab2, tab3 = st.tabs(["Current Role & Skills", "Tasks", "Settings"])
-
-# with tab1:
-#     st.subheader(f"Current Role & Job Description")
-#     st.markdown("""
-#     **Current Role:** {}  
-#     **Job Description:** {}
-#     """.format(employee_role, job_description), unsafe_allow_html=True)
-#     st.markdown("<hr style='margin: 5px 0px'>", unsafe_allow_html=True)
-    
-#     # Display skills
-#     col1, col2 = st.columns([1, 1])
-    
-#     with col1:
-#         st.markdown("### Technical Skills")
-#         st.markdown("<hr style='margin: 5px 0px'>", unsafe_allow_html=True)
-#         for skill, info in technical_skills.items():
-#             rating = "⭐" * info["rating"]
-#             st.markdown(f"**{skill}** ({info['level']})  \n{rating}")
-    
-#     # Add vertical line
-#     # st.markdown("<div class='vertical-line'></div>", unsafe_allow_html=True)
-    
-#     with col2:
-#         st.markdown("### Soft Skills")
-#         st.markdown("<hr style='margin: 5px 0px'>", unsafe_allow_html=True)
-#         for skill, info in soft_skills.items():
-#             rating = "⭐" * info["rating"]
-#             st.markdown(f"**{skill}** ({info['level']})  \n{rating}")
-    
-#     # Create a dataframe for better visualization
-#     all_skills = {}
-#     for skill, info in technical_skills.items():
-#         all_skills[f"Technical: {skill}"] = info["rating"]
-#     for skill, info in soft_skills.items():
-#         all_skills[f"Soft: {skill}"] = info["rating"]
-    
-#     # Create radar chart
-#     st.subheader("Skill Chart")
-#     st.markdown("<hr style='margin: 5px 0px'>", unsafe_allow_html=True)
-
-#     fig = go.Figure()
-    
-#     fig.add_trace(go.Scatterpolar(
-#         r=list(all_skills.values()),
-#         theta=list(all_skills.keys()),
-#         fill='toself',
-#         name='Skills Profile'
-#     ))
-    
-#     fig.update_layout(
-#         polar=dict(
-#             radialaxis=dict(
-#                 visible=False,
-#                 range=[0, 5]
-#             )
-#         ),
-#         showlegend=False,
-#         height = 400
-#     )
-    
-#     # Display the chart
-#     st.plotly_chart(fig, use_container_width=True)
-
-# with tab2:
-#     st.header("Tasks")
-#     st.write("Employee tasks and assignments go here.")
-
-# with tab3:
-#     st.header("Settings")
-#     st.write("Employee settings and preferences go here.")
 
 
 st.markdown("""
@@ -137,7 +67,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Title section with styled welcome message
-st.markdown(f"<h1 class='main-header'>Welcome, {employee_name}! 👋</h1>", unsafe_allow_html=True)
+
 
 # ...existing tab definition...
 
