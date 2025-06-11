@@ -1,0 +1,122 @@
+[
+  {
+    "project_id": "DNT-P001",
+    "project_name": "Cloud Migration Accelerator",
+    "division": "Digital & Technology",
+    "duration_months": 6,
+    "location": "HQ (Hybrid)",
+    "project_description": "Lead a rapid migration of five legacy on\u2011prem applications to Azure, establish an enterprise landing zone, and embed FinOps dashboards for ongoing cost optimisation.",
+    "required_skills": [
+      {
+        "skill_name": "Azure Architecture Design",
+        "effort": 5
+      },
+      {
+        "skill_name": "Infrastructure as Code (Terraform)",
+        "effort": 4
+      },
+      {
+        "skill_name": "CI/CD Pipelines (Azure DevOps)",
+        "effort": 4
+      },
+      {
+        "skill_name": "Cloud Cost Optimisation",
+        "effort": 3
+      },
+      {
+        "skill_name": "Stakeholder Management",
+        "effort": 2
+      }
+    ]
+  },
+  {
+    "project_id": "DNT-P002",
+    "project_name": "AI Service Desk Chatbot POC",
+    "division": "Digital & Technology",
+    "duration_months": 3,
+    "location": "HQ (Remote\u2011friendly)",
+    "project_description": "Prototype a GenAI chatbot that answers Level\u20111 IT support queries by integrating Azure OpenAI with existing ServiceNow KB articles and ticket data.",
+    "required_skills": [
+      {
+        "skill_name": "Python (FastAPI)",
+        "effort": 3
+      },
+      {
+        "skill_name": "Azure OpenAI & Prompt Engineering",
+        "effort": 5
+      },
+      {
+        "skill_name": "Data Integration (APIs)",
+        "effort": 4
+      },
+      {
+        "skill_name": "NLP Evaluation Metrics",
+        "effort": 2
+      },
+      {
+        "skill_name": "UX Design for Chatbots",
+        "effort": 2
+      }
+    ]
+  },
+  {
+    "project_id": "INV-P001",
+    "project_name": "Green Energy Fund LBO Analysis",
+    "division": "Investments",
+    "duration_months": 4,
+    "location": "KL Office",
+    "project_description": "Conduct leverage buy\u2011out modelling and due diligence for the acquisition of a 150\u2011MW solar portfolio in Southeast Asia, including scenario analysis for exit strategies.",
+    "required_skills": [
+      {
+        "skill_name": "Financial Modelling (LBO)",
+        "effort": 5
+      },
+      {
+        "skill_name": "DCF Valuation",
+        "effort": 4
+      },
+      {
+        "skill_name": "ESG Impact Analysis",
+        "effort": 3
+      },
+      {
+        "skill_name": "Market Research \u2013 Renewable Energy",
+        "effort": 3
+      },
+      {
+        "skill_name": "Risk Assessment & Mitigation",
+        "effort": 2
+      }
+    ]
+  },
+  {
+    "project_id": "INV-P002",
+    "project_name": "Public Markets Quant Factor Backtest",
+    "division": "Investments",
+    "duration_months": 2,
+    "location": "Remote",
+    "project_description": "Design and back\u2011test a multi\u2011factor model (quality, momentum, low volatility) on ASEAN equities using five\u2011year price and fundamentals data to propose a pilot strategy.",
+    "required_skills": [
+      {
+        "skill_name": "Python (Pandas / NumPy)",
+        "effort": 3
+      },
+      {
+        "skill_name": "Quantitative Factor Modelling",
+        "effort": 5
+      },
+      {
+        "skill_name": "Time Series Analysis",
+        "effort": 4
+      },
+      {
+        "skill_name": "Backtesting Frameworks",
+        "effort": 3
+      },
+      {
+        "skill_name": "Data Cleaning & ETL",
+        "effort": 2
+      }
+    ]
+  }
+]

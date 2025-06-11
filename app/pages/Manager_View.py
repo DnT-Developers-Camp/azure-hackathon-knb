@@ -71,7 +71,6 @@ st.title('Manager View')
 # Create tabs
 tabs = st.tabs([
     'Team Snapshot',
-    'Employee Drill Down',
     'Secondment/Project Matching'
 ])
 
@@ -90,12 +89,13 @@ with tabs[0]:
     employee_ids = manager_employee_lookup[manager_id]
     team_df = employees_df[employees_df['id'].isin(employee_ids)]
     
-    # Display team information
-    st.subheader(f'Team: {manager_row["division"]}')
-    st.write(f'Manager: {selected_manager} ({manager_row["role"]})')
-    st.write(f'Number of Direct Reports: {len(employee_ids)}')
-    
-    # Display team members and team skills side by side
+    # --- NEW: Manager context as title/subtitle ---
+    st.markdown(f"""
+        <div style='font-size: 1.6em; font-weight: 700;'>{selected_manager}</div>
+        <div style='font-size: 1.1em; color: #666;'>Division: {manager_row['division']} &nbsp;|&nbsp; Role: {manager_row['role']}</div>
+        <div style='font-size: 1em; color: #888;'>Direct Reports: {len(employee_ids)}</div>
+    """, unsafe_allow_html=True)
+    # --- Existing: Team Members and Skills (leave as is) ---
     col_members, col_skills = st.columns(2)
     with col_members:
         st.subheader('Team Members')
@@ -196,6 +196,26 @@ with tabs[0]:
         )
         fig.update_layout(yaxis={'categoryorder':'total ascending'}, height=400)
         st.plotly_chart(fig, use_container_width=True)
+
+        # --- Heatmap of skills vs employees ---
+        def render_heatmap(team_skill_gaps: dict, skills_df: pd.DataFrame):
+            """Render a skill vs. employee heatmap using Plotly."""
+            skill_matrix = []
+            names = []
+            for emp_id, data in team_skill_gaps.items():
+                emp_skills = skills_df[skills_df['employee_id'] == emp_id]
+                row = {}
+                for _, skill in emp_skills.iterrows():
+                    row[skill['skill_name']] = skill['rating']
+                skill_matrix.append(row)
+                names.append(data['name'])
+            skill_df = pd.DataFrame(skill_matrix, index=names).fillna(0)
+            fig = px.imshow(skill_df, aspect='auto', color_continuous_scale='Blues',
+                           labels=dict(x="Skill", y="Employee", color="Rating"),
+                           title="Employee Skill Heatmap")
+            st.plotly_chart(fig, use_container_width=True)
+
+        render_heatmap(team_skill_gaps, skills_df)
         
         # Display most common skill gaps
         st.subheader("Most Common Skill Gaps")
@@ -226,6 +246,58 @@ with tabs[0]:
                 st.dataframe(lt_df, use_container_width=True)
             else:
                 st.write("No long-term gaps identified")
+        
+        # --- Employee Capability Profile Table ---
+        cap_df_key = "capability_df"
+        if cap_df_key not in st.session_state:
+            with st.spinner("Computing employee capability profiles..."):
+                capability_rows = []
+                total_emp = len(employees_df)
+                progress_cap = st.progress(0, text="Computing capability profiles...")
+                for idx, (_, emp) in enumerate(employees_df.iterrows()):
+                    emp_data = emp.to_dict()
+                    emp_skills = skills_df[skills_df['employee_id'] == emp['id']]
+                    emp_data['skills'] = emp_skills.to_dict('records')
+                    try:
+                        gaps_emp = get_employee_skill_gaps(emp_data)
+                        st_gaps = gaps_emp['short_term_gaps']
+                        lt_gaps_e = gaps_emp['long_term_gaps']
+                        capability_rows.append({
+                            'id': emp['id'],
+                            'name': emp['name'],
+                            'role': emp['role'],
+                            'manager': emp['manager'],
+                            'st_gap_count': len(st_gaps),
+                            'lt_gap_count': len(lt_gaps_e),
+                            'match_pct': gaps_emp['match_percent'],
+                            'st_gap_list': ", ".join(st_gaps),
+                            'lt_gap_list': ", ".join(lt_gaps_e)
+                        })
+                    except Exception:
+                        capability_rows.append({
+                            'id': emp['id'],
+                            'name': emp['name'],
+                            'role': emp['role'],
+                            'manager': emp['manager'],
+                            'st_gap_count': 0,
+                            'lt_gap_count': 0,
+                            'match_pct': 100.0,
+                            'st_gap_list': "",
+                            'lt_gap_list': ""
+                        })
+                    progress_cap.progress((idx + 1) / total_emp)
+                progress_cap.empty()
+                capability_df = pd.DataFrame(capability_rows)
+                st.session_state[cap_df_key] = capability_df
+        else:
+            capability_df = st.session_state[cap_df_key]
+
+        # Filter to current manager's direct reports
+        manager_cap_df = capability_df[capability_df['manager'] == selected_manager].copy()
+        manager_cap_df['match_pct'] = manager_cap_df['match_pct'].round(1)
+
+        st.subheader("Employee Capability Profile Table")
+        st.dataframe(manager_cap_df, use_container_width=True)
     
     with gap_tabs[1]:
         # Individual employee analysis
@@ -265,25 +337,30 @@ with tabs[0]:
                     'match_percent': 100.0
                 }
         col1, col2, col3 = st.columns(3)
-        col1.metric("Current Role", gap_data['role'])
-        col2.metric("Future Role", gap_data['future_role'])
+        col1.markdown(f"""
+            <div style='font-size: 14px; font-weight: 600;'>Current Role</div>
+            <div style='font-size: 16px; font-weight: 700; color: #333;'>{gap_data['role']}</div>
+        """, unsafe_allow_html=True)
+        col2.markdown(f"""
+            <div style='font-size: 14px; font-weight: 600;'>Future Role</div>
+            <div style='font-size: 16px; font-weight: 700; color: #333;'>{gap_data['future_role']}</div>
+        """, unsafe_allow_html=True)
         col3.metric("Skill Match", f"{gap_data['match_percent']:.1f}%")
-        col1, col2 = st.columns(2)
-        with col1:
-            st.write("Short-term Skill Gaps")
-            if gap_data['short_term_gaps']:
-                for skill in gap_data['short_term_gaps']:
-                    st.markdown(f"- {skill}")
-            else:
-                st.write("No short-term gaps identified")
-        with col2:
-            st.write("Long-term Skill Gaps")
-            if gap_data['long_term_gaps']:
-                for skill in gap_data['long_term_gaps']:
-                    st.markdown(f"- {skill}")
-            else:
-                st.write("No long-term gaps identified")
-        st.write("Current Skills")
+
+        # Display short-term and long-term gap lists
+        st.subheader("Skill Gap Lists")
+        gap_col1, gap_col2 = st.columns(2)
+        gap_col1.write("Short-term Gaps")
+        if gap_data['short_term_gaps']:
+            gap_col1.write(", ".join(gap_data['short_term_gaps']))
+        else:
+            gap_col1.write("None")
+        gap_col2.write("Long-term Gaps")
+        if gap_data['long_term_gaps']:
+            gap_col2.write(", ".join(gap_data['long_term_gaps']))
+        else:
+            gap_col2.write("None")
+
         if not employee_skills.empty:
             skill_df = employee_skills[['skill_name', 'rating', 'type']].sort_values('rating', ascending=False)
             skill_df.columns = ['Skill', 'Rating', 'Type']
@@ -293,9 +370,5 @@ with tabs[0]:
 
 
 with tabs[1]:
-    st.header('Employee Drill Down')
-    st.write('Placeholder for Employee Drill Down content.')
-
-with tabs[2]:
     st.header('Secondment/Project Matching')
     st.write('Placeholder for Secondment/Project Matching content.')
