@@ -15,6 +15,10 @@ from utils.resume_parser import load_sample_data
 from utils.azure_utils import upload_file_to_blob, extract_markdown_doc_intel, get_container, add_item
 from datetime import datetime
 
+st.set_page_config(
+        page_title="Onboarding New Employee"
+)
+
 # Initialize session state variables if they don't exist
 if 'analysis_results' not in st.session_state:
     st.session_state.analysis_results = None
