@@ -169,24 +169,50 @@ if submit:
                 # Create a dataframe for better visualization
 
             all_skills = {}
+            future_skills = {}
+
+            # Current skills
             for skill_info in output['skills_data']['skills']:
                 skill_name = skill_info["skill_name"]
                 rating = skill_info["rating"]
                 all_skills[f"{skill_name}"] = rating
 
+            # Future skills
+            for skill_info in output['future_jd_skill_data']['skills']:
+                skill_name = skill_info["skill_name"]
+                rating = skill_info["rating"]
+                future_skills[f"{skill_name}"] = rating
+
+            # Create combined set of skills
+            all_skill_names = set(list(all_skills.keys()) + list(future_skills.keys()))
+
+            # Fill missing values with 0
+            current_values = [all_skills.get(skill, 0) for skill in all_skill_names]
+            future_values = [future_skills.get(skill, 0) for skill in all_skill_names]
 
             # Update radar chart styling
             fig = go.Figure()
-            
+
+            # Add current skills trace
             fig.add_trace(go.Scatterpolar(
-                r=list(all_skills.values()),
-                theta=list(all_skills.keys()),
+                r=current_values,
+                theta=list(all_skill_names),
                 fill='toself',
-                name='Skills Profile',
+                name='Current Skill Competency',
                 line=dict(color='#1976D2'),
                 fillcolor='rgba(25, 118, 210, 0.3)'
             ))
-            
+
+            # Add future skills trace
+            fig.add_trace(go.Scatterpolar(
+                r=future_values,
+                theta=list(all_skill_names),
+                fill='toself',
+                name='Projected Skill Competency',
+                line=dict(color='#FFA726'),
+                fillcolor='rgba(255, 167, 38, 0.3)'
+            ))
+
             fig.update_layout(
                 polar=dict(
                     radialaxis=dict(
@@ -200,8 +226,15 @@ if submit:
                     ),
                     bgcolor='#f8f9fa'
                 ),
-                font = dict(size =50),
-                showlegend=False,
+                font=dict(size=50),
+                showlegend=True,
+                legend=dict(
+                    yanchor="top",
+                    y=0.99,
+                    xanchor="left",
+                    x=0.01,
+                    font=dict(size=20)
+                ),
                 height=375,
                 margin=dict(t=30, b=30),
                 paper_bgcolor='rgba(0,0,0,0)',
