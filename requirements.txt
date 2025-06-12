@@ -13,4 +13,4 @@ azure-ai-documentintelligence
 azure-core
 matplotlib
 plotly
-matplotlib
+
