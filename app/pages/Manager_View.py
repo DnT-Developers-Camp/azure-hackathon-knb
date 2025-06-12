@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 import importlib
-from utils import skill_gap_engine as _sge
+from utils import skill_gap_engine as _sge, azure_openai_utils as ao_utils
 importlib.reload(_sge)
 from utils.skill_gap_engine import get_employee_skill_gaps
 import plotly.express as px
@@ -27,6 +27,15 @@ def load_json_data():
         managers_data = json.load(f)
     
     return employees_data, managers_data
+
+# Load projects data
+def load_projects_data():
+    """Load projects data from sample JSON."""
+    base_dir = Path(__file__).parent.parent.parent
+    projects_path = os.path.join(base_dir, 'data', 'sample_data', 'projects_demo.json')
+    with open(projects_path, 'r') as f:
+        projects_data = json.load(f)
+    return projects_data
 
 # Convert to pandas DataFrames
 def create_dataframes(employees_data, managers_data):
@@ -59,8 +68,59 @@ def create_manager_employee_lookup(managers_data):
         manager_employee_lookup[manager['id']] = manager['direct_reports']
     return manager_employee_lookup
 
+# Helper: AI candidate matching using utils.azure_openai_utils
+@st.cache_data(show_spinner=False)
+def ai_match_candidate(project: dict, employee: dict, employee_skills: list):
+    """Call Azure OpenAI to infer candidate fit. Returns (score 0-100, reasoning str)."""
+    # If credentials are not set up in utils.config, fall back to heuristic
+    try:
+        client = ao_utils.get_openai_client()
+        deployment_name = ao_utils.AZURE_OPENAI_DEPLOYMENT_NAME
+    except Exception:
+        client = None
+        deployment_name = None
+
+    if client is None or deployment_name is None:
+        # Fallback simple heuristic if no API config
+        proj_skills = {s['skill_name'] for s in project['required_skills']}
+        emp_skill_names = {s['skill_name'] for s in employee_skills}
+        overlap = len(proj_skills & emp_skill_names)
+        score = round((overlap / len(proj_skills)) * 100, 1) if proj_skills else 0
+        reasoning = "Fallback word-match heuristic used (no Azure OpenAI credentials)."
+        return score, reasoning
+
+    # Build prompt
+    prompt_system = "You are an expert resource manager. You will evaluate candidate skills vs project requirements and return a numeric fit score and short reasoning."
+    project_skill_str = "\n".join([f"- {s['skill_name']} (effort {s['effort']})" for s in project['required_skills']])
+    employee_skill_str = "\n".join([f"- {s['skill_name']} (rating {s['rating']})" for s in employee_skills])
+    prompt_user = (
+        f"Project: {project['project_name']} ({project['project_id']})\n"
+        f"Required skills:\n{project_skill_str}\n\n"
+        f"Candidate: {employee['name']} ({employee['role']})\n"
+        f"Candidate skills:\n{employee_skill_str}\n\n"
+        "Respond in JSON with the following keys: match_score (0-100 numeric), reasoning (short)."
+    )
+
+    try:
+        response = client.chat.completions.create(
+            model=deployment_name,
+            messages=[
+                {"role": "system", "content": prompt_system},
+                {"role": "user", "content": prompt_user}
+            ],
+            temperature=0.2,
+            max_tokens=200
+        )
+        content = response.choices[0].message.content
+        import json as _json
+        data = _json.loads(content.strip())
+        return float(data.get('match_score', 0)), data.get('reasoning', '')
+    except Exception as e:
+        return 0.0, f"Error from OpenAI: {str(e)[:100]}"
+
 # Load data and create structures
 employees_data, managers_data = load_json_data()
+projects_data = load_projects_data()
 employees_df, skills_df, managers_df = create_dataframes(employees_data, managers_data)
 manager_employee_lookup = create_manager_employee_lookup(managers_data)
 
@@ -171,16 +231,24 @@ with tabs[0]:
         avg_match = sum(match_percentages) / len(match_percentages) if match_percentages else 0
         
         # Display average match percentage
-        col1.metric("Team Average Skill Match", f"{avg_match:.1f}%")
+        col1.metric(
+            "Team Average Skill Match",
+            f"{avg_match:.1f}%",
+            help="Average percentage indicating how closely your team's current skills align with required skills (100% = perfect match)."
+        )
         
         # Count total gaps
         total_st_gaps = sum(len(data['short_term_gaps']) for data in team_skill_gaps.values())
         total_lt_gaps = sum(len(data['long_term_gaps']) for data in team_skill_gaps.values())
-        col2.metric("Total Skill Gaps", f"{total_st_gaps + total_lt_gaps}", 
-                   f"ST: {total_st_gaps}, LT: {total_lt_gaps}")
+        col2.metric(
+            "Total Skill Gaps",
+            f"{total_st_gaps + total_lt_gaps}",
+            f"ST: {total_st_gaps}, LT: {total_lt_gaps}",
+            help="A skill gap is the difference between the skills an employee currently has and the skills required for their current or future role."
+        )
         
         # Create a bar chart of match percentages
-        st.subheader('Individual Skill Match')
+        st.subheader('Individual Skill Match', help='Bar chart showing each team member’s overall skill-match percentage (higher is better).')
         team_skill_gap_df = pd.DataFrame([
             {"Name": gap['name'], "Skill Match": gap['match_percent']} for gap in team_skill_gaps.values()
         ])
@@ -370,5 +438,62 @@ with tabs[0]:
 
 
 with tabs[1]:
-    st.header('Secondment/Project Matching')
-    st.write('Placeholder for Secondment/Project Matching content.')
+    st.header('Secondment / Project Matching')
+
+    # Select project dropdown
+    project_options = [f"{proj['project_name']} ({proj['project_id']})" for proj in projects_data]
+    selected_project_label = st.selectbox('Select Project', project_options)
+
+    # Retrieve selected project dict
+    selected_project = next(p for p in projects_data if f"{p['project_name']} ({p['project_id']})" == selected_project_label)
+
+    # Display project details
+    st.subheader('Project Details')
+    st.markdown(f"**Project ID:** {selected_project['project_id']}")
+    st.markdown(f"**Division:** {selected_project['division']}")
+    st.markdown(f"**Duration (months):** {selected_project['duration_months']}")
+    st.markdown(f"**Location:** {selected_project['location']}")
+    st.write(selected_project['project_description'])
+
+    # Display required skills table
+    st.subheader('Required Skills & Effort')
+    req_skills_df = pd.DataFrame(selected_project['required_skills'])
+    req_skills_df.columns = ['Skill', 'Effort']
+    st.dataframe(req_skills_df, use_container_width=True)
+
+    # Button to find matches among manager's direct reports
+    if st.button('Find Matches'):
+        st.subheader('Candidate Matches (Direct Reports)')
+
+        # Filter candidates by project division prefix (INV or DNT)
+        proj_prefix = selected_project['project_id'].split('-')[0]  # e.g., 'INV' or 'DNT'
+        candidate_df = team_df[team_df['id'].str.startswith(proj_prefix)].copy()
+
+        total_emp = len(candidate_df)
+        if total_emp == 0:
+            st.info(f"No {proj_prefix} candidates found among your direct reports for this project.")
+            st.stop()
+
+        candidate_rows = []
+        progress = st.progress(0, text="Evaluating candidates with Azure OpenAI...")
+        for idx, (_, emp) in enumerate(candidate_df.iterrows()):
+            emp_id = emp['id']
+            emp_skills_records = skills_df[skills_df['employee_id'] == emp_id].to_dict('records')
+
+            score, reasoning = ai_match_candidate(selected_project, emp.to_dict(), emp_skills_records)
+
+            candidate_rows.append({
+                'Employee': emp['name'],
+                'Role': emp['role'],
+                'Match %': round(score, 1),
+                'Reasoning': reasoning
+            })
+            progress.progress((idx + 1) / total_emp, text=f"Evaluating: {emp['name']} ({emp['role']})")
+
+        progress.empty()
+
+        if candidate_rows:
+            cand_df = pd.DataFrame(candidate_rows).sort_values('Match %', ascending=False)
+            st.dataframe(cand_df, use_container_width=True)
+        else:
+            st.info('No direct reports found for this manager.')

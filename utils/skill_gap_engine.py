@@ -9,6 +9,8 @@ from utils.config import (
     AZURE_OPENAI_DEPLOYMENT_NAME
 )
 
+SHORT_TERM_THRESHOLD = 6  # effort score <= this is considered short-term (increase balance)
+
 def get_openai_client():
     """Create and return an Azure OpenAI client"""
     return AzureOpenAI(
@@ -31,8 +33,8 @@ def create_skill_gap_prompt(current_jd, future_jd):
         "Based on these job descriptions, identify the specific skills that the person would need to acquire to move from the current role to the future role.\n"
         "For each missing skill, provide an effort score from 1-10 that represents how difficult or time-consuming it would be to acquire this skill.\n\n"
         "Effort score guidelines:\n"
-        "- 1-4: Skills that can be acquired in the short term (weeks to a few months)\n"
-        "- 5-10: Skills that require long-term development (several months to years)\n\n"
+        f"- 1-{SHORT_TERM_THRESHOLD}: Skills that can be acquired in the short term (weeks to a few months)\n"
+        f"- {SHORT_TERM_THRESHOLD+1}-10: Skills that require long-term development (several months to years)\n\n"
         "Return ONLY the missing skills in the following JSON format:\n"
         f"{json_format_example}\n\n"
         "If there are no missing skills, return an empty array [].\n"
@@ -120,8 +122,8 @@ def analyze_skill_gaps(current_jd, future_jd):
             skill_gaps = []
     
     # Categorize skills into short-term and long-term gaps
-    short_term_gaps = [item["skill"] for item in skill_gaps if item["effort"] <= 4]
-    long_term_gaps = [item["skill"] for item in skill_gaps if item["effort"] > 4]
+    short_term_gaps = [item["skill"] for item in skill_gaps if item["effort"] <= SHORT_TERM_THRESHOLD]
+    long_term_gaps = [item["skill"] for item in skill_gaps if item["effort"] > SHORT_TERM_THRESHOLD]
     
     # Calculate match percentage based on current skills and gaps
     def calculate_match_percent(current_skill_count):
