@@ -11,3 +11,4 @@ azure-storage-blob
 azure-cosmos
 azure-ai-documentintelligence
 azure-core
+plotly
